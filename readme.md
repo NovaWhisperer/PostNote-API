@@ -1,158 +1,148 @@
 # PostNote API
 
-A simple Notes backend API built with Node.js, Express, and MongoDB (Mongoose).
+REST API for creating and managing notes with Node.js, Express, and MongoDB Atlas.
 
-This project supports creating, reading, updating, and deleting notes, and was tested using Postman.
+Built as a clean backend practice project with full CRUD routes and tested using Postman.
 
-## Tech Stack
+## Stack
 
 - Node.js
 - Express.js
 - MongoDB Atlas
 - Mongoose
-- Postman (for API testing)
+- Postman
 
-## Features
+## What This API Does
 
-- Create a note
+- Create notes
 - Fetch all notes
-- Update a note title
-- Delete a note
-- JSON request/response handling
-- Environment variable based configuration
+- Update note title
+- Delete notes
+- Parse JSON request bodies
+- Use environment variables for config
 
-## Project Structure
+## Project Layout
 
-- server.js
-- src/db/db.js
-- src/models/note.model.js
+```text
+.
+|-- server.js
+|-- src/
+|   |-- db/
+|   |   `-- db.js
+|   `-- models/
+|       `-- note.model.js
+|-- .env.example
+|-- .gitignore
+`-- package.json
+```
 
-## Prerequisites
+## Quick Start
 
-- Node.js (v18+ recommended)
-- npm
-- MongoDB Atlas connection string
-- Postman (optional, recommended for testing)
+1. Install dependencies.
 
-## Installation
+```bash
+npm install
+```
 
-1. Clone the repository.
-2. Open the project folder.
-3. Install dependencies:
+2. Create your `.env` file from `.env.example`.
 
-	 npm install
-
-## Environment Variables
-
-Create a .env file in the project root:
-
+```env
 MONGODB_URI=your_mongodb_connection_string
 PORT=3000
+```
 
-## Run the Project
+3. Start the server.
 
-Start the server:
-
+```bash
 npm run start
+```
 
-If start script is not available in your local copy, run:
+Server URL: `http://localhost:3000`
 
-node server.js
+## API Reference
 
-Server runs on:
+Base URL: `http://localhost:3000`
 
-http://localhost:3000
+| Method | Route | Description |
+| --- | --- | --- |
+| GET | `/` | Health route |
+| POST | `/notes` | Create a note |
+| GET | `/notes` | Fetch all notes |
+| PATCH | `/notes/:id` | Update note title |
+| DELETE | `/notes/:id` | Delete a note |
 
-## API Endpoints
+### Create Note
 
-### 1) Health Route
+Request body:
 
-- Method: GET
-- URL: /
+```json
+{
+  "title": "My First Note",
+  "content": "This is a sample note"
+}
+```
 
 Response:
 
-Notes App Launch Successfully
-
-### 2) Create Note
-
-- Method: POST
-- URL: /notes
-- Body (JSON):
-
+```json
 {
-	"title": "My First Note",
-	"content": "This is a sample note"
+  "message": "Note created successfully"
 }
+```
 
-Success Response:
+### Get All Notes
 
+Response:
+
+```json
 {
-	"message": "Note created successfully"
+  "message": "Notes fetch successfuly",
+  "notes": []
 }
+```
 
-### 3) Get All Notes
+### Update Note Title
 
-- Method: GET
-- URL: /notes
+Request body:
 
-Success Response:
-
+```json
 {
-	"message": "Notes fetch successfuly",
-	"notes": []
+  "title": "Updated Title"
 }
+```
 
-### 4) Update Note Title
+Response:
 
-- Method: PATCH
-- URL: /notes/:id
-- Body (JSON):
-
+```json
 {
-	"title": "Updated Title"
+  "message": "Note updated successfully"
 }
+```
 
-Success Response:
+### Delete Note
 
+Response:
+
+```json
 {
-	"message": "Note updated successfully"
+  "message": "Note deleted successfully"
 }
+```
 
-### 5) Delete Note
+## Postman
 
-- Method: DELETE
-- URL: /notes/:id
+Use Postman to test all routes quickly.
 
-Success Response:
-
-{
-	"message": "Note deleted successfully"
-}
-
-## Postman Testing
-
-You can create a Postman collection with the 5 routes above and test all CRUD operations.
-
-Recommended setup in Postman:
-
-- Base URL variable: http://localhost:3000
-- Use JSON body for POST and PATCH requests
-- Save note id from GET response and use it in PATCH/DELETE routes
+Recommended setup:
+- Create a collection named `PostNote API`
+- Add a variable: `baseUrl = http://localhost:3000`
+- Save a created note ID and reuse it in PATCH and DELETE requests
 
 ## MongoDB
 
-This project uses MongoDB Atlas through Mongoose.
+- Uses Mongoose to connect to MongoDB Atlas
+- Connection string is read from `MONGODB_URI` in `.env`
+- Notes are stored in the `note` collection
 
-- Connection is configured via MONGODB_URI in .env
-- Notes are stored in the note collection
 
-## Git Ignore
-
-The repository includes a .gitignore file that ignores:
-
-- node_modules
-- .env and other secret env files
-- debug log files
-- common OS junk files
 
